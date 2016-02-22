@@ -1,0 +1,21 @@
+#cav{
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: block;
+  box-shadow: 0px 0px 10px black;
+  position: relative;
+}
+#bk{
+  margin:auto;
+  width: 65%;
+  height: 36px;
+}
+.bk{
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  margin: 12px;
+  display: inline-block;
+  border: 1px dotted gray;
+}
