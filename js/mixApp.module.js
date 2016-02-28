@@ -25,8 +25,22 @@ mixApp.module = (function(){
     
   };
 
-  selectApp = function (app){
-    var app = app || moduleAppMap.paint;
+  selectApp = function (appName){
+    //切换app后先将上一个app的数据清除，
+    //再初始化下一个app。
+    //===============================
+    var app;
+    if(currentApp){
+      currentApp.params = null;
+    }
+    if(appName){
+      app = moduleAppMap[appName]?moduleAppMap[appName]: moduleAppMap.paint;
+    }else{
+      app = moduleAppMap.paint;
+    }
+
+    app.init();
+
     return app;
   };
 
@@ -43,7 +57,7 @@ mixApp.module = (function(){
   };
 
   moduleMainInit = function (app){
-    console.log(app.params)
+
     if(app.params.main.panel instanceof HTMLElement){
       moduleDomMap.$main.append(app.params.main.panel);
     }
@@ -59,9 +73,16 @@ mixApp.module = (function(){
     }
   };
 
-  moduleAppListInit = function (app){
-    if(app.params.appList instanceof HTMLElement){
-      moduleDomMap.$appList.append(app.params.appList);
+  moduleAppListInit = function (appMap){
+    var appNode;
+    for(var i in moduleAppMap){
+      appNode = document.createElement('button');
+      appNode.innerHTML = moduleAppMap[i].name;
+      appNode.className = "btn btn-primary";
+      appNode.onclick = function(){
+        alert('clicked')
+      }
+      moduleDomMap.$appList.append(appNode);
     }
   };
   //=========一般方法区域结束=========
@@ -73,17 +94,14 @@ mixApp.module = (function(){
   init = function (appMap,moduleDomMap){
 
     setMap(appMap,moduleDomMap);
-    //切换app后先将上一个app的数据清除，
-    //再初始化下一个app。
-    //===============================
+    
     currentApp = selectApp();
-    currentApp.params = null;
-    currentApp.init();
+
     moduleListInit(currentApp);
     moduleFuncInit(currentApp);
     moduleMainInit(currentApp);
     moduleToolsInit(currentApp);
-    moduleAppListInit(currentApp);
+    moduleAppListInit();
   };
 
   return {init: init};
