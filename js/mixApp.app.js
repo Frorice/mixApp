@@ -26,9 +26,12 @@ mixApp.app = (function (){
   //注册子应用
   //==========
   registApp = function (app){
+    if(appMap[app.name]){
+      alert('该应用名已存在，请改名。');
+    }else{
       appMap[app.name] = app;
-      
-    };
+    }   
+  };
 
   return {registApp: registApp, appMap:appMap};
   //=======公共方法区域结束==========
