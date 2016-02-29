@@ -28,19 +28,22 @@ mixApp.module = (function(){
 
 
   moduleListInit = function (app){
+    moduleDomMap.$list.children().remove();
     if(app.params.list instanceof HTMLElement){
       moduleDomMap.$list.append(app.params.list);
     }
   };
 
   moduleFuncInit = function (app){
+
+    moduleDomMap.$func.children().remove();
     if(app.params.func instanceof HTMLElement){
       moduleDomMap.$func.append(app.params.func);
     }
   };
 
   moduleMainInit = function (app){
-
+    moduleDomMap.$main.children().remove();
     if(app.params.main.panel instanceof HTMLElement){
       moduleDomMap.$main.append(app.params.main.panel);
     }
@@ -48,9 +51,12 @@ mixApp.module = (function(){
     if(app.params.main.styleSheet instanceof HTMLElement){
       moduleDomMap.$main.append(app.params.main.styleSheet);
     }
+    // 使主模块获取焦点
+    app.params.main.panel.focus();
   };
 
   moduleToolsInit = function (app){
+    moduleDomMap.$tools.children().remove();
     if(app.params.tools instanceof HTMLElement){
       moduleDomMap.$tools.append(app.params.tools);
     }
