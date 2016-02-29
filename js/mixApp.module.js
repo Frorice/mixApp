@@ -25,24 +25,7 @@ mixApp.module = (function(){
     
   };
 
-  selectApp = function (appName){
-    //切换app后先将上一个app的数据清除，
-    //再初始化下一个app。
-    //===============================
-    var app;
-    if(currentApp){
-      currentApp.params = null;
-    }
-    if(appName){
-      app = moduleAppMap[appName]?moduleAppMap[appName]: moduleAppMap.paint;
-    }else{
-      app = moduleAppMap.paint;
-    }
 
-    app.init();
-
-    return app;
-  };
 
   moduleListInit = function (app){
     if(app.params.list instanceof HTMLElement){
@@ -73,6 +56,31 @@ mixApp.module = (function(){
     }
   };
 
+  selectApp = function (appName){
+    //切换app后先将上一个app的数据清除，
+    //再初始化下一个app。
+    //===============================
+    var app;
+
+    if(currentApp){
+      currentApp.params = null;
+    }
+    if(appName){
+      app = moduleAppMap[appName]?moduleAppMap[appName]: moduleAppMap.paint;
+    }else{
+      app = moduleAppMap.paint;
+    }
+
+    app.init();
+
+    moduleListInit(app);
+    moduleFuncInit(app);
+    moduleMainInit(app);
+    moduleToolsInit(app);
+    
+    return app;
+  };
+
   moduleAppListInit = function (appMap){
     var appNode;
     for(var i in moduleAppMap){
@@ -80,11 +88,12 @@ mixApp.module = (function(){
       appNode.innerHTML = moduleAppMap[i].name;
       appNode.className = "btn btn-primary";
       appNode.onclick = function(){
-        alert('clicked')
+        currentApp = selectApp(this.innerHTML.toString());
       }
       moduleDomMap.$appList.append(appNode);
     }
   };
+
   //=========一般方法区域结束=========
 
   //=========事件处理方法============
@@ -97,10 +106,7 @@ mixApp.module = (function(){
     
     currentApp = selectApp();
 
-    moduleListInit(currentApp);
-    moduleFuncInit(currentApp);
-    moduleMainInit(currentApp);
-    moduleToolsInit(currentApp);
+    
     moduleAppListInit();
   };
 
