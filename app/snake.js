@@ -27,7 +27,11 @@ var snake = (function(){
         map[food[0]][food[1]].style.backgroundColor = "green";
         Snake.prototype.move = move;
         var snake = new Snake();
-        startmove();
+        var start = document.createElement('button');
+        start.innerHTML = "开始";
+        start.className = "btn btn-primary";
+        start.onclick = startmove;
+        params.tools = start;
       }
 
 
@@ -116,15 +120,13 @@ var snake = (function(){
 
         this.body.push(map[20][20]); 
 
-
-
-
         this.direction = 0;
       }
 
 
       function startmove() 
       { 
+        Map.focus();
         if(snake.move()) 
         { 
           setTimeout(startmove, speed); 
