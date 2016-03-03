@@ -27,11 +27,31 @@ var snake = (function(){
         map[food[0]][food[1]].style.backgroundColor = "green";
         Snake.prototype.move = move;
         var snake = new Snake();
+        var paused;
         var start = document.createElement('button');
+        var pause = document.createElement('button');
+        var resume = document.createElement('button');
         start.innerHTML = "开始";
-        start.className = "btn btn-primary";
+        pause.innerHTML = "暂停";
+        resume.innerHTML = "重新开始";
+        start.className = pause.className = resume.className ="btn btn-primary";
         start.onclick = startmove;
-        params.tools = start;
+        pause.onclick = function(){
+          clearTimeout(paused);
+        };
+        resume.onclick = function (){
+          for(i in snake.body){
+            snake.body[i].style.backgroundColor = "black";
+          }
+
+          snake = new Snake();
+          startmove();
+        };
+        var div = document.createElement('div');
+        div.appendChild(start);
+        div.appendChild(pause);
+        div.appendChild(resume);
+        params.tools = div;
       }
 
 
@@ -89,7 +109,7 @@ var snake = (function(){
           case 2   : this.head[1]+=1;break;
           case 3   : this.head[0]-=1;break;
         }
-        if(this.head[0] < 0 || this.head[0] > 49 || this.head[1] < 0 || this.head[1] > 99) {
+        if(this.head[0] < 0 || this.head[0] > 31 || this.head[1] < 0 || this.head[1] > 57) {
           return false;
         }else if(map[this.head[0]][this.head[1]] == map[food[0]][food[1]]){
           map[food[0]][food[1]].style.backgroundColor = "white";
@@ -97,10 +117,12 @@ var snake = (function(){
           createfood();
           return true;
         }else if(map[this.head[0]][this.head[1]].style.backgroundColor == "white"){
-          if(map[this.head[0]][this.head[1]] == this.body.pop()){//撞到尾巴没关系
+          var end = this.body.pop();
+          if(map[this.head[0]][this.head[1]] == end){//撞到尾巴没关系
             this.body.unshift(map[this.head[0]][this.head[1]]);
             return true;
           }
+          end.style.backgroundColor = "black";
           return false;
         }
         map[this.head[0]][this.head[1]].style.backgroundColor = "white";
@@ -129,7 +151,7 @@ var snake = (function(){
         Map.focus();
         if(snake.move()) 
         { 
-          setTimeout(startmove, speed); 
+          paused = setTimeout(startmove, speed); 
         } 
 
       } 
