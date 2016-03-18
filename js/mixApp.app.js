@@ -11,7 +11,7 @@ mixApp.app = (function (){
 
     //方法
     //=================
-    registApp;
+    registApp,deleteApp;
   //===模块作用域变量配置区域结束====
 
   //=========子应用管理方法==========
@@ -27,12 +27,20 @@ mixApp.app = (function (){
   //==========
   registApp = function (app){
     if(appMap[app.name]){
-      alert('该应用名已存在，请改名。');
+      console.info('该应用名已存在，请改名。');
     }else{
       appMap[app.name] = app;
     }   
   };
 
-  return {registApp: registApp, appMap:appMap};
+  deleteApp = function(appName){
+    if(appMap[appName]){
+      delete appMap[appName] 
+    }else{
+      console.error('此应用不存在！');
+    }
+  }
+
+  return {registApp: registApp, deleteApp, appMap:appMap};
   //=======公共方法区域结束==========
 })();

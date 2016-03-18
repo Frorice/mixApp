@@ -81,23 +81,27 @@ mixApp.module = (function(){
 
     moduleListInit(app);
     moduleFuncInit(app);
-    moduleMainInit(app);
     moduleToolsInit(app);
+    moduleMainInit(app);
+    
     
     return app;
   };
 
   moduleAppListInit = function (appMap){
     var appNode;
+    moduleDomMap.$appList.empty();
     for(var i in moduleAppMap){
-      appNode = document.createElement('button');
-      appNode.innerHTML = moduleAppMap[i].name;
-      appNode.className = "btn btn-primary";
-      appNode.onclick = function(){
-        currentApp = selectApp(this.innerHTML.toString());
-      }
-      moduleDomMap.$appList.append(appNode);
+        
+        appNode = document.createElement('button');
+        appNode.innerHTML = moduleAppMap[i].name;
+        appNode.className = "btn btn-primary";
+        appNode.onclick = function(){
+          currentApp = selectApp(this.innerHTML.toString());
+        }
+        moduleDomMap.$appList.append(appNode);
     }
+   
   };
 
   //=========一般方法区域结束=========

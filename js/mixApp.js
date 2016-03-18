@@ -8,6 +8,7 @@ var mixApp = (function (){
   //调用shell的模块初始化方法以加载应用模块
   //=======================================
   var initApp = function ($container){
+   
     mixApp.shell.initModule($container,mixApp.app,mixApp.module);
   };
 

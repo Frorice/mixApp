@@ -23,8 +23,7 @@ mixApp.shell = (function (){
 
   //=========应用管理方法============
   setMap = function (){
-    var $container = stateMap.$container,
-        apps = stateMap.apps;
+    var $container = stateMap.$container;
     moduleDomMap = {
       $tools: $container.find('.left-tools'),
       $main:  $container.find('.left-main-module'),
